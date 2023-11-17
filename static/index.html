@@ -8,9 +8,15 @@
 </head>
 
 <body>
-    <input type="text" name="username" />
+    <label>
+        username:
+        <input type="text" name="username" />
+    </label>
     <main></main>
-    <input type="text" name="message">
+    <label>
+        message:
+        <input type="text" name="message" placeholder="press enter to send">
+    </label>
     <script>
         void async function () {
             const ws = new WebSocket("ws://localhost:8000/ws");
@@ -24,11 +30,11 @@
             };
             const msgInput = document.querySelector('input[name="message"]')
             msgInput.addEventListener('keyup', (e) => {
-                const username = document.querySelector('input[name="username"]').value;
+                const username = document.querySelector('input[name="username"]').value || "anonymous";
                 console.log(e)
                 if (e.key !== "Enter") return;
 
-                ws.send(username + " " + msgInput.value)
+                ws.send(username + ": " + msgInput.value)
                 msgInput.value = "";
             })
         }();
