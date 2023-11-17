@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <input type="text" name="username" />
+    <main></main>
+    <input type="text" name="message">
+    <script>
+        void async function () {
+            const ws = new WebSocket("ws://localhost:8000/ws");
+            ws.onopen = () => {
+                console.log("connected");
+            };
+            ws.onmessage = e => {
+                const h1 = document.createElement('h4')
+                h1.innerText = e.data;
+                document.querySelector('main').appendChild(h1)
+            };
+            const msgInput = document.querySelector('input[name="message"]')
+            msgInput.addEventListener('keyup', (e) => {
+                const username = document.querySelector('input[name="username"]').value;
+                console.log(e)
+                if (e.key !== "Enter") return;
+
+                ws.send(username + " " + msgInput.value)
+                msgInput.value = "";
+            })
+        }();
+
+    </script>
+</body>
+
+</html>
