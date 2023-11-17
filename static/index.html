@@ -19,7 +19,7 @@
     </label>
     <script>
         void async function () {
-            const ws = new WebSocket("ws://localhost:8000/ws");
+            const ws = new WebSocket("ws://" + window.location.host + "/ws");
             ws.onopen = () => {
                 console.log("connected");
             };
